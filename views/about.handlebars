@@ -1,3 +1,11 @@
-<h1>About</h1>
-<p>This is a Node/Express app for jotting down your daily thoughts</p>
-<p>Version: 1.0.0</p>
+{{#each idea}}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{title}}</h5>
+    <p class="card-text">{{details}}</p>
+    <p>{{user}}</p>
+    
+  </div>
+</div>
+
+{{/each}}

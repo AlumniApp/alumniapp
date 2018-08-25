@@ -70,10 +70,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// About Route
-app.get('/about', (req, res) => {
-  res.render('about');
-});
 
 
 // Use routes

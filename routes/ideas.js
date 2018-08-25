@@ -14,7 +14,7 @@ const User = mongoose.model('users');
 
 
 // Add Idea Form
-router.get('ideas/add', ensureAuthenticated, (req, res) => {
+router.get('/ideas/add', ensureAuthenticated, (req, res) => {
   res.render('ideas/add');
 });
 
@@ -37,7 +37,7 @@ router.get('ideas/edit/:id', ensureAuthenticated, (req, res) => {
 });
 
 // Process Form
-router.post('/', ensureAuthenticated, (req, res) => {
+router.post('/ideas', ensureAuthenticated, (req, res) => {
   let errors = [];
 
   if(!req.body.title){
@@ -57,19 +57,19 @@ router.post('/', ensureAuthenticated, (req, res) => {
     const newUser = {
       title: req.body.title,
       details: req.body.details,
-      user: req.user.id
+      user: req.user.email
     }
     new Idea(newUser)
       .save()
       .then(idea => {
         req.flash('success_msg', 'idea added');
-        res.redirect('/ideas');
+        res.redirect('/dashboard');
       })
   }
 });
 
 // Edit Form process
-router.put('/:id', ensureAuthenticated, (req, res) => {
+router.put('ideas/:id', ensureAuthenticated, (req, res) => {
   Idea.findOne({
     _id: req.params.id
   })
@@ -87,7 +87,7 @@ router.put('/:id', ensureAuthenticated, (req, res) => {
 });
 
 // Delete Idea
-router.delete('/:id', ensureAuthenticated, (req, res) => {
+router.delete('ideas/:id', ensureAuthenticated, (req, res) => {
   Idea.remove({_id: req.params.id})
     .then(() => {
       req.flash('success_msg', 'idea removed');
@@ -95,7 +95,7 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
     });
 });
 
-router.get('/stories', (req,res) => {
+router.get('/about', (req,res) => {
 Idea.find()
 .then(idea => {
   res.render('about', {
