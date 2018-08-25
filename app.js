@@ -13,7 +13,7 @@ const app = express();
 // Load routes
 const ideas = require('./routes/ideas');
 const users = require('./routes/users');
-
+const admin = require('./routes/admin');
 // Passport Config
 require('./config/passport')(passport);
 
@@ -77,8 +77,9 @@ app.get('/about', (req, res) => {
 
 
 // Use routes
-app.use('/ideas', ideas);
+app.use('/', ideas);
 app.use('/users', users);
+app.use('/',admin);
 
 const port = 3000;
 

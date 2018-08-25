@@ -21,7 +21,7 @@ router.get('/register', (req, res) => {
 // Login Form POST
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect:'/ideas',
+    successRedirect:'/dashboard',
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
@@ -59,7 +59,8 @@ router.post('/register', (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            status:''
+            status:'',
+            utype:''
           });
           
           bcrypt.genSalt(10, (err, salt) => {

@@ -9,5 +9,13 @@
     </form>
   </div>
 {{else}}
-  <p>No ideas listed</p>
+{{#if user.status}}
+<p>Congratulations now you can post something</p>
+<p>No ideas listed</p>
+
+
+{{else}}
+<h3>your auth req sent to admin wait for approval</h3>
+{{/if}}
+  
 {{/each}}

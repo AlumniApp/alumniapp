@@ -6,32 +6,27 @@ const {ensureAuthenticated} = require('../helpers/auth');
 // Load Idea Model
 require('../models/Idea');
 const Idea = mongoose.model('ideas');
+require('../models/User');
+const User = mongoose.model('users');
 
 // Idea Index Page
-router.get('/', ensureAuthenticated, (req, res) => {
-  Idea.find({user: req.user.id})
-    .sort({date:'desc'})
-    .then(ideas => {
-      res.render('ideas/index', {
-        ideas:ideas
-      });
-    });
-});
+
+
 
 // Add Idea Form
-router.get('/add', ensureAuthenticated, (req, res) => {
+router.get('ideas/add', ensureAuthenticated, (req, res) => {
   res.render('ideas/add');
 });
 
 // Edit Idea Form
-router.get('/edit/:id', ensureAuthenticated, (req, res) => {
+router.get('ideas/edit/:id', ensureAuthenticated, (req, res) => {
   Idea.findOne({
     _id: req.params.id
   })
   .then(idea => {
     if(idea.user != req.user.id){
       req.flash('error_msg', 'Not Authorized');
-      res.redirect('/ideas');
+      res.redirect('/dashboard');
     } else {
       res.render('ideas/edit', {
         idea:idea
@@ -96,8 +91,17 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
   Idea.remove({_id: req.params.id})
     .then(() => {
       req.flash('success_msg', 'idea removed');
-      res.redirect('/ideas');
+      res.redirect('/dashboard');
     });
 });
+
+router.get('/stories', (req,res) => {
+Idea.find()
+.then(idea => {
+  res.render('about', {
+    idea:idea
+  })
+})
+})
 
 module.exports = router;
